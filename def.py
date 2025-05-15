@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from tensorflow import keras
 import os
 import sys
+import joblib
 
 # Giao diện
 st.set_page_config(page_title="Dự đoán Độ Võng Cực Đại", page_icon="🔵", layout="centered")
@@ -29,7 +30,10 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
+# Load mô hình và scaler
 model = keras.models.load_model(resource_path('fnn_deflection_model.h5'))
+x_scaler = joblib.load(resource_path('x_scaler.pkl'))
+y_scaler = joblib.load(resource_path('y_scaler.pkl'))
 
 # Nhập input
 st.subheader("Nhập thông số dầm:")
@@ -44,25 +48,29 @@ if st.button("Dự đoán độ võng cực đại"):
     # Chuẩn bị dữ liệu input
     input_data = np.array([[b, h, E, L, F]])
 
+    # Chuẩn hóa đầu vào
+    input_scaled = x_scaler.transform(input_data)
+
     # Dự đoán
-    delta_max_pred = model.predict(input_data)[0][0]
+    delta_scaled = model.predict(input_scaled)
+
+    # Đảo chuẩn hóa đầu ra
+    delta_max_pred = y_scaler.inverse_transform(delta_scaled)[0][0]
 
     st.success(f"✅ Độ võng cực đại dự đoán là: **{delta_max_pred:.6e} m**")
 
     # Vẽ mô hình cây dầm Cantilever
     x = np.linspace(0, L, 100)
-    # Công thức cho dầm cantilever với tải trọng tập trung P ở đầu tự do:
-    y = -(F * x**2) / (6 * E * (b * h**3)) * (3 * L - x)  # Độ võng của dầm cantilever
+    y = -(F * x**2) / (6 * E * (b * h**3)) * (3 * L - x)  # Công thức dầm cantilever
 
     fig, ax = plt.subplots(figsize=(8, 3))
     ax.plot(x, y, color='blue', linewidth=3)
 
-    # Trang trí thêm
     ax.set_xlabel("Chiều dài dầm (m)")
     ax.set_ylabel("Độ võng (m)")
     ax.set_title("Mô hình Dầm Cantilever Bị Võng")
     ax.grid(True)
     ax.set_xlim(0, L)
-    ax.set_ylim(1.5 * np.min(y), 0.5 * np.max(y))  # chỉnh y để nhìn đẹp
+    ax.set_ylim(1.5 * np.min(y), 0.5 * np.max(y))
 
     st.pyplot(fig)
