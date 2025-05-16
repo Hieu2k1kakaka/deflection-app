@@ -17,10 +17,6 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode()
 
-# Đường dẫn ảnh nền
-background_path = resource_path("logo_transparent.jpg")
-bg_url = f"file://{background_path.replace(os.sep, '/')}"
-
 # CSS làm nền ảnh và khung nội dung nổi
 image_base64 = get_base64_image("logo_transparent.jpg")
 st.markdown(
