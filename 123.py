@@ -29,8 +29,8 @@ st.markdown(
         background-repeat: no-repeat;
     }}
 
-  .stApp {{
-        background-color: rgba(0, 0, 0, 0.6);  /* Lớp mờ tối phía trên ảnh nền */
+    .stApp {{
+        background-color: rgba(0, 0, 0, 0.6);  /* Lớp mờ tối */
         padding: 2rem;
         border-radius: 20px;
         max-width: 900px;
@@ -40,14 +40,18 @@ st.markdown(
     }}
 
     h1, h2, h3, .stButton>button {{
-        color: #cc0000;  /* Đổi màu tiêu đề, nút */
+        color: #cc0000;
         font-weight: bold;
     }}
 
-    .stTextInput>div>input, .stNumberInput>div {{
+    /* CHỮ TRONG Ô NHẬP LIỆU */
+    input, .stNumberInput input {{
+        color: #cc0000 !important;  /* chữ trong input */
+        font-weight: bold;
+    }}
+
+    .stTextInput>div>div>input, .stNumberInput>div>div>input {{
         background-color: rgba(255, 255, 255, 0.9);
-        color: black;
-        font-weight: 600;
     }}
 
     .stAlert {{
