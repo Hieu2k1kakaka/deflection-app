@@ -24,6 +24,7 @@ st.markdown(
     <style>
     [data-testid="stAppViewContainer"] {{
         background-image: url("data:image/png;base64,{image_base64}");
+        background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }}
