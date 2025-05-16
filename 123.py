@@ -43,9 +43,9 @@ st.markdown(
         font-weight: bold;
     }}
     
-    .stAlert > div {
+    .stAlert > div {{
         color: white;
-    }
+    }}
     </style>
 """, unsafe_allow_html=True)
 
