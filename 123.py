@@ -84,7 +84,9 @@ if st.button("Dự đoán độ võng cực đại"):
 
     # Vẽ hình ảnh mô phỏng
     x = np.linspace(0, L, 100)
-    y = -(F * x**2) / (6 * E * (b * h**3)) * (3 * L - x)
+    I = (b * h**3) / 12
+    y = -(F * x**2) / (6 * E * I) * (3 * L - x)
+
 
     fig, ax = plt.subplots(figsize=(8, 3))
     ax.plot(x, y, color='blue', linewidth=3)
