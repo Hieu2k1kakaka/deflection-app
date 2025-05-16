@@ -44,7 +44,7 @@ st.markdown(
     }}
     
     .stAlert > div {{
-        color: blue;
+        color: yellow;
     }}
     </style>
 """, unsafe_allow_html=True)
