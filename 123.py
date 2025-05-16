@@ -30,37 +30,23 @@ st.markdown(
     }}
 
     .stApp {{
-        background-color: rgba(0, 0, 0, 0.6);  /* Lớp mờ tối */
+        background-color: rgba(255, 255, 255, 0.85);
         padding: 2rem;
         border-radius: 20px;
         max-width: 900px;
         margin: auto;
         box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
-        color: #cc0000;  /* CHỮ ĐỎ ĐẬM */
     }}
 
     h1, h2, h3, .stButton>button {{
-        color: #cc0000;
+        color: #002B5B;
         font-weight: bold;
-    }}
-
-    /* CHỮ TRONG Ô NHẬP LIỆU */
-    input, .stNumberInput input {{
-        color: #cc0000 !important;  /* chữ trong input */
-        font-weight: bold;
-    }}
-
-    .stTextInput>div>div>input, .stNumberInput>div>div>input {{
-        background-color: rgba(255, 255, 255, 0.9);
-    }}
-
-    .stAlert {{
-        color: red;
     }}
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # Tiêu đề ứng dụng
 st.markdown("<h1 style='text-align: center;'>🔵 Ứng dụng Dự Đoán Độ Võng Cực Đại</h1>", unsafe_allow_html=True)
