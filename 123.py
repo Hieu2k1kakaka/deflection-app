@@ -18,7 +18,7 @@ def get_base64_image(image_path):
         return base64.b64encode(image_file.read()).decode()
 
 # CSS làm nền ảnh và khung nội dung nổi
-image_base64 = get_base64_image("logo_transparent.png")
+image_base64 = get_base64_image("logo_transparent.jpg")
 st.markdown(
     f"""
     <style>
