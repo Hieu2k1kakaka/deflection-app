@@ -18,7 +18,6 @@ def get_base64_image(image_path):
         return base64.b64encode(image_file.read()).decode()
 
 # CSS làm nền ảnh và khung nội dung nổi
-image_base64 = get_base64_image("logo_transparent.jpg")
 st.markdown(
     f"""
     <style>
@@ -30,7 +29,7 @@ st.markdown(
     }}
 
     .stApp {{
-        background-color: rgba(255, 255, 255, 0.85);
+        background-color: rgba(255, 255, 255, 0.8); /* Lớp phủ trắng mờ */
         padding: 2rem;
         border-radius: 20px;
         max-width: 900px;
@@ -42,10 +41,17 @@ st.markdown(
         color: #002B5B;
         font-weight: bold;
     }}
+
+    .stTextInput>div>input, .stNumberInput>div {{
+        background-color: rgba(255, 255, 255, 0.9);
+        color: black;
+        font-weight: 600;
+    }}
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # Tiêu đề ứng dụng
 st.markdown("<h1 style='text-align: center;'>🔵 Ứng dụng Dự Đoán Độ Võng Cực Đại</h1>", unsafe_allow_html=True)
