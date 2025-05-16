@@ -20,10 +20,22 @@ st.markdown(
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-    }
-    .stApp {
-        background-color: rgba(255, 255, 255, 0.8);  /* Mờ để dễ đọc chữ */
-    }
+    }}
+
+    .stApp {{
+        background-color: rgba(255, 255, 255, 0.85); /* lớp mờ */
+        padding: 2rem;
+        border-radius: 20px;
+        max-width: 800px;
+        margin: auto;
+        box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+    }}
+
+    h1, h2, h3, .stButton>button {{
+        color: #002B5B;
+        font-weight: bold;
+    }}
+
     </style>
     """,
     unsafe_allow_html=True
