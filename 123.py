@@ -43,7 +43,7 @@ st.markdown(
 
 
 # Hiển thị logo + tiêu đề
-logo = Image.open("logo_transparent.png")
+logo = Image.open("logo_transparent.jpg")
 st.image(logo, width=150)
 st.markdown("<h1 style='text-align: center;'>🔵 Ứng dụng Dự Đoán Độ Võng Cực Đại</h1>", unsafe_allow_html=True)
 
