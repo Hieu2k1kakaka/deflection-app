@@ -18,11 +18,12 @@ def resource_path(relative_path):
     except Exception:
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
-    
-# Load đúng đường dẫn ảnh nền nếu build exe
+
+# Đường dẫn ảnh nền
 background_path = resource_path("logo_transparent.jpg")
 bg_url = f"file://{background_path.replace(os.sep, '/')}"
-# CSS nền đẹp
+
+# CSS làm nền ảnh và khung nội dung nổi
 st.markdown(
     f"""
     <style>
@@ -34,7 +35,7 @@ st.markdown(
     }}
 
     .stApp {{
-        background-color: rgba(255, 255, 255, 0.85); /* overlay làm mờ cho dễ đọc */
+        background-color: rgba(255, 255, 255, 0.85);
         padding: 2rem;
         border-radius: 20px;
         max-width: 900px;
@@ -51,8 +52,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-# Hiển thị logo + tiêu đề
+# Tiêu đề ứng dụng
 st.markdown("<h1 style='text-align: center;'>🔵 Ứng dụng Dự Đoán Độ Võng Cực Đại</h1>", unsafe_allow_html=True)
 
 # Đường dẫn tương thích cho app khi build exe
