@@ -30,17 +30,17 @@ st.markdown(
     }}
 
     .stApp {{
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(0, 0, 0, 0.6);  /* Nền mờ tối */
         padding: 2rem;
         border-radius: 20px;
         max-width: 900px;
         margin: auto;
         box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
-        color: color: #ffffff; /* 🔁 đổi màu chữ toàn bộ */
+        color: #ffffff;  /* CHỮ TRẮNG */
     }}
 
     h1, h2, h3, .stButton>button {{
-        color: #ffffff; /* 🔁 đổi màu tiêu đề và nút */
+        color: #ffffff;  /* Tiêu đề và nút cũng trắng */
         font-weight: bold;
     }}
 
@@ -49,11 +49,14 @@ st.markdown(
         color: black;
         font-weight: 600;
     }}
+
+    .stAlert {{
+        color: black;  /* Thông báo giữ màu đen dễ đọc */
+    }}
     </style>
     """,
     unsafe_allow_html=True
 )
-
 # Tiêu đề ứng dụng
 st.markdown("<h1 style='text-align: center;'>🔵 Ứng dụng Dự Đoán Độ Võng Cực Đại</h1>", unsafe_allow_html=True)
 
