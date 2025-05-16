@@ -16,7 +16,7 @@ st.markdown(
     """
     <style>
     [data-testid="stAppViewContainer"] {
-        background-image: url('background_beam.png');
+        background-image: url('background_beam.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
