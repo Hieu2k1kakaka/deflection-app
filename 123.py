@@ -42,10 +42,12 @@ st.markdown(
         color: #002B5B;
         font-weight: bold;
     }}
+    
+    .stAlert > div {
+        color: white;
+    }
     </style>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
 
 # Tiêu đề ứng dụng
