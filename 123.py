@@ -11,22 +11,25 @@ from PIL import Image
 # Cấu hình trang
 st.set_page_config(page_title="Dự đoán Độ Võng Cực Đại", page_icon="🔵", layout="centered")
 
+# Load đúng đường dẫn ảnh nền nếu build exe
+background_path = resource_path("logo_transparent.jpg")
+bg_url = f"file://{background_path.replace(os.sep, '/')}"
 # CSS nền đẹp
 st.markdown(
-    """
+    f"""
     <style>
-    [data-testid="stAppViewContainer"] {
-        background-image: url('logo_transparent.jpg');
+    [data-testid="stAppViewContainer"] {{
+        background-image: url('{bg_url}');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }}
 
     .stApp {{
-        background-color: rgba(255, 255, 255, 0.85); /* lớp mờ */
+        background-color: rgba(255, 255, 255, 0.85); /* overlay làm mờ cho dễ đọc */
         padding: 2rem;
         border-radius: 20px;
-        max-width: 800px;
+        max-width: 900px;
         margin: auto;
         box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
     }}
@@ -35,7 +38,6 @@ st.markdown(
         color: #002B5B;
         font-weight: bold;
     }}
-
     </style>
     """,
     unsafe_allow_html=True
@@ -43,8 +45,6 @@ st.markdown(
 
 
 # Hiển thị logo + tiêu đề
-logo = Image.open("logo_transparent.jpg")
-st.image(logo, width=150)
 st.markdown("<h1 style='text-align: center;'>🔵 Ứng dụng Dự Đoán Độ Võng Cực Đại</h1>", unsafe_allow_html=True)
 
 # Đường dẫn tương thích cho app khi build exe
