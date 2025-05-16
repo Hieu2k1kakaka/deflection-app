@@ -12,17 +12,23 @@ from PIL import Image
 st.set_page_config(page_title="Dự đoán Độ Võng Cực Đại", page_icon="🔵", layout="centered")
 
 # CSS nền đẹp
-st.markdown("""
+st.markdown(
+    """
     <style>
     [data-testid="stAppViewContainer"] {
-        background: linear-gradient(to bottom right, #d0ebff, #f0f9ff);
+        background-image: url('background_beam.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
-    h1 {
-        font-family: 'Segoe UI', sans-serif;
-        color: #003366;
+    .stApp {
+        background-color: rgba(255, 255, 255, 0.8);  /* Mờ để dễ đọc chữ */
     }
     </style>
-""", unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
+
 
 # Hiển thị logo + tiêu đề
 logo = Image.open("logo_transparent.png")
