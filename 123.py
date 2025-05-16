@@ -55,7 +55,7 @@ st.markdown(
     }}
 
     .stAlert {{
-        color: black;
+        color: red;
     }}
     </style>
     """,
