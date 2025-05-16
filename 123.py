@@ -11,6 +11,14 @@ from PIL import Image
 # Cấu hình trang
 st.set_page_config(page_title="Dự đoán Độ Võng Cực Đại", page_icon="🔵", layout="centered")
 
+# Hàm lấy đúng đường dẫn ảnh & model (hữu ích nếu build .exe)
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+    
 # Load đúng đường dẫn ảnh nền nếu build exe
 background_path = resource_path("logo_transparent.jpg")
 bg_url = f"file://{background_path.replace(os.sep, '/')}"
