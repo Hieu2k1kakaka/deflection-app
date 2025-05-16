@@ -11,24 +11,23 @@ from PIL import Image
 # Cấu hình trang
 st.set_page_config(page_title="Dự đoán Độ Võng Cực Đại", page_icon="🔵", layout="centered")
 
-# Hàm lấy đúng đường dẫn ảnh & model (hữu ích nếu build .exe)
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
+import base64
+
+def get_base64_image(image_path):
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode()
 
 # Đường dẫn ảnh nền
 background_path = resource_path("logo_transparent.jpg")
 bg_url = f"file://{background_path.replace(os.sep, '/')}"
 
 # CSS làm nền ảnh và khung nội dung nổi
+image_base64 = get_base64_image("logo_transparent.jpg")
 st.markdown(
     f"""
     <style>
     [data-testid="stAppViewContainer"] {{
-        background-image: url('{bg_url}');
+        background-image: url("data:image/png;base64,{image_base64}");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
