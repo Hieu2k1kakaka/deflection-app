@@ -36,11 +36,11 @@ st.markdown(
         max-width: 900px;
         margin: auto;
         box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
-        color: #000000; /* 🔁 đổi màu chữ toàn bộ */
+        color: color: #ffffff; /* 🔁 đổi màu chữ toàn bộ */
     }}
 
     h1, h2, h3, .stButton>button {{
-        color: #002B5B; /* 🔁 đổi màu tiêu đề và nút */
+        color: #ffffff; /* 🔁 đổi màu tiêu đề và nút */
         font-weight: bold;
     }}
 
