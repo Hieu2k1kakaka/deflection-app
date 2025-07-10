@@ -1,4 +1,4 @@
-# deflection_app.py
+# fD_predict_app.py
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,17 +7,17 @@ import os
 import sys
 import pickle
 from PIL import Image
-
-# Cấu hình trang
-st.set_page_config(page_title="Dự đoán Độ Võng Cực Đại", page_icon="🔵", layout="centered")
-
 import base64
 
+# Cấu hình trang
+st.set_page_config(page_title="Dự đoán fD", page_icon="🔵", layout="centered")
+
+# Hàm đọc ảnh nền
 def get_base64_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode()
 
-# CSS làm nền ảnh và khung nội dung nổi
+# Đặt ảnh nền và khung
 image_base64 = get_base64_image("logo_transparent.jpg")
 st.markdown(
     f"""
@@ -28,7 +28,6 @@ st.markdown(
         background-position: center;
         background-repeat: no-repeat;
     }}
-
     .stApp {{
         background-color: rgba(255, 255, 255, 0.85);
         padding: 2rem;
@@ -37,23 +36,19 @@ st.markdown(
         margin: auto;
         box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
     }}
-
     h1, h2, h3, .stButton>button {{
         color: #002B5B;
         font-weight: bold;
     }}
-    
-    .stAlert > div {{
-        color: yellow;
-    }}
     </style>
-""", unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
 
+# Tiêu đề
+st.markdown("<h1 style='text-align: center;'>🔵 Ứng dụng Dự Đoán fD</h1>", unsafe_allow_html=True)
 
-# Tiêu đề ứng dụng
-st.markdown("<h1 style='text-align: center;'>🔵 Ứng dụng Dự Đoán Độ Võng Cực Đại</h1>", unsafe_allow_html=True)
-
-# Đường dẫn tương thích cho app khi build exe
+# Hàm hỗ trợ đường dẫn tương thích
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -69,34 +64,24 @@ with open(resource_path('y_scaler.pkl'), 'rb') as f:
     y_scaler = pickle.load(f)
 
 # Giao diện nhập liệu
-st.subheader("Nhập thông số dầm:")
-b = st.number_input("Bề rộng b (m)", min_value=0.01, value=0.15, step=0.01)
-h = st.number_input("Chiều cao h (m)", min_value=0.01, value=0.30, step=0.01)
-E = st.number_input("Mô đun đàn hồi E (Pa)", min_value=1e5, value=2.0e11, step=1e9, format="%.1e")
-L = st.number_input("Chiều dài dầm L (m)", min_value=0.1, value=3.0, step=0.1)
-F = st.number_input("Tải trọng F (N)", min_value=0.0, value=5000.0, step=100.0)
+st.subheader("Nhập thông số vật liệu và điều kiện:")
+muy = st.number_input("μ (Tham số phi địa phương)", min_value=0.0, value=0.5, step=0.01)
+v = st.number_input("v (Vận tốc lực - m/s)", min_value=0.0, value=1.0, step=0.1)
+n = st.number_input("n (Tham số vật liệu FMG)", min_value=0.0, value=2.0, step=0.1)
+DeltaT = st.number_input("ΔT (Chênh lệch nhiệt độ - °C)", min_value=0.0, value=50.0, step=1.0)
 
-if st.button("Dự đoán độ võng cực đại"):
-    input_data = np.array([[b, h, E, L, F]])
+# Dự đoán và hiển thị
+if st.button("Dự đoán fD"):
+    input_data = np.array([[muy, v, n, DeltaT]])
     input_scaled = x_scaler.transform(input_data)
-    delta_scaled = model.predict(input_scaled)
-    delta_max_pred = y_scaler.inverse_transform(delta_scaled)[0][0]
+    fD_scaled = model.predict(input_scaled)
+    fD_pred = y_scaler.inverse_transform(fD_scaled)[0][0]
 
-    st.success(f"✅ Độ võng cực đại dự đoán là: **{delta_max_pred:.6e} m**")
+    st.success(f"✅ fD dự đoán là: **{fD_pred:.6f}**")
 
-    # Vẽ hình ảnh mô phỏng
-    x = np.linspace(0, L, 100)
-    I = (b * h**3) / 12
-    y = -(F * x**2) / (6 * E * I) * (3 * L - x)
-
-
-    fig, ax = plt.subplots(figsize=(8, 3))
-    ax.plot(x, y, color='blue', linewidth=3)
-    ax.set_xlabel("Chiều dài dầm (m)")
-    ax.set_ylabel("Độ võng (m)")
-    ax.set_title("Mô hình Dầm Cantilever Bị Võng")
-    ax.grid(True)
-    ax.set_xlim(0, L)
-    ax.set_ylim(1.5 * np.min(y), 0.5 * np.max(y))
-
+    # Vẽ biểu đồ kết quả
+    fig, ax = plt.subplots()
+    ax.bar(["fD"], [fD_pred], color='orange')
+    ax.set_ylabel("Giá trị fD")
+    ax.set_title("Dự đoán fD từ mô hình học máy")
     st.pyplot(fig)
