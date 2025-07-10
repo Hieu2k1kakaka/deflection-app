@@ -79,9 +79,55 @@ if st.button("Dự đoán fD"):
 
     st.success(f"✅ fD dự đoán là: **{fD_pred:.6f}**")
 
-    # Vẽ biểu đồ kết quả
-    fig, ax = plt.subplots()
-    ax.bar(["fD"], [fD_pred], color='orange')
-    ax.set_ylabel("Giá trị fD")
-    ax.set_title("Dự đoán fD từ mô hình học máy")
-    st.pyplot(fig)
+# Phần so sánh với dữ liệu thực tế từ file 'nanotable.csv'
+st.markdown("---")
+st.subheader("📂 So sánh toàn bộ fD thực tế và fD dự đoán từ file `nanobeam.csv`")
+
+try:
+    file_path = os.path.join(os.path.dirname(__file__), 'nanotable.csv')
+    df = pd.read_csv(file_path)
+
+    required_cols = {"muy", "v", "n", "DeltaT", "fD"}
+    if not required_cols.issubset(df.columns):
+        st.error("❌ File CSV cần chứa các cột: muy, v, n, DeltaT, fD")
+    else:
+        st.success("✅ Đọc dữ liệu thành công từ nanobeam.csv")
+        st.dataframe(df.head())
+
+        # Dự đoán fD từ mô hình
+        X_data = df[["muy", "v", "n", "DeltaT"]].values
+        X_scaled = x_scaler.transform(X_data)
+        fD_pred_scaled = model.predict(X_scaled)
+        fD_pred = y_scaler.inverse_transform(fD_pred_scaled).flatten()
+
+        # Gộp kết quả
+        df["fD_dudoan"] = fD_pred
+        df["sai_so"] = np.abs(df["fD"] - df["fD_dudoan"])
+
+        st.markdown("### 🧾 Bảng so sánh fD thực tế vs. fD dự đoán")
+        st.dataframe(df)
+
+        # Vẽ biểu đồ fD
+        fig3, ax3 = plt.subplots()
+        ax3.plot(df["fD"], label="fD thực tế", marker='o')
+        ax3.plot(df["fD_dudoan"], label="fD dự đoán", marker='x')
+        ax3.set_xlabel("Chỉ số mẫu")
+        ax3.set_ylabel("Giá trị fD")
+        ax3.set_title("So sánh fD thực tế và dự đoán")
+        ax3.legend()
+        ax3.grid(True)
+        st.pyplot(fig3)
+
+        # Vẽ sai số
+        fig4, ax4 = plt.subplots()
+        ax4.plot(df["sai_so"], marker='d', color='red')
+        ax4.set_xlabel("Chỉ số mẫu")
+        ax4.set_ylabel("Sai số tuyệt đối")
+        ax4.set_title("Biểu đồ sai số fD")
+        ax4.grid(True)
+        st.pyplot(fig4)
+
+except Exception as e:
+    st.error(f"❌ Lỗi khi đọc hoặc xử lý file: {e}")
+
+
